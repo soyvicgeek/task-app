@@ -5,20 +5,20 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.jetbrains.annotations.NotNull
 
-@Entity(tableName = ScheduleEntity.TABLE_NAME)
+@Entity
 data class ScheduleEntity(
-    @ColumnInfo(name = "title") @NotNull val title: String,
-    @ColumnInfo(name = "description") @NotNull val description: String,
-    @ColumnInfo(name = "id") @NotNull val id: Int,
-    @ColumnInfo(name = "date") @NotNull val date: String,
-    @ColumnInfo(name = "hour") @NotNull val hour: String
-) {
-    companion object {
-        const val TABLE_NAME = "schedule_detail"
-    }
-
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "schedule_id")
-    var scheduleId: Int = 0
-}
+    var id: Int = 0,
+    val typeLikeMotorcycle: String = "",
+    val motorcycleBrand: String = "",
+    val motorcycleList: String,
+    val contentList: String = "",
+    val isSkipIfYouHaveAMotorcycle: Boolean = false,
+    val isSkipListMotorcycle: Boolean = false,
+    val isSkipTypeBrand: Boolean = false,
+    val isSkipContent: Boolean = false,
+    val idBrand: Int = 0,
+    val creationTime: String = "",
+)
+
 

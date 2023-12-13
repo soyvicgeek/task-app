@@ -1,31 +1,33 @@
 package com.tecjiquilpan.pendienteslist.data.local.room.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
 import com.tecjiquilpan.pendienteslist.data.local.room.entity.ScheduleEntity
-import com.tecjiquilpan.pendienteslist.data.local.room.entity.ScheduleListEntity
 
 @Dao
 interface ScheduleDao {
     @Insert
-    fun addSchedule(road: ScheduleEntity)
+    suspend fun addSchedule(road: ScheduleEntity)
 
-    @Update
-    fun updateToLikeAndInterests(vararg pokemon: ScheduleEntity)
+    @Query("SELECT * FROM ScheduleEntity")
+    suspend fun getAllSchedule(): List<ScheduleEntity>
 
-    @Delete
-    fun delete(vararg pokemon: ScheduleEntity)
+    @Query("DELETE FROM ScheduleEntity")
+    suspend fun deleteSchedule()
 
-    @Query("SELECT * FROM schedulelistentity")
-    suspend fun getAllSchedule(): List<ScheduleListEntity>
-    @Query("SELECT * FROM " + ScheduleEntity.TABLE_NAME + " ORDER BY name, url")
-    fun getSchedule(): LiveData<List<ScheduleEntity>>
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveSchedule(data: ScheduleListEntity)
-
+    @Query("UPDATE ScheduleEntity SET typeLikeMotorcycle = :typeLikeMotorcycle, motorcycleBrand=:motorcycleBrand, motorcycleList=:motorcycleList, contentList = :contentList, isSkipIfYouHaveAMotorcycle = :isSkipIfYouHaveAMotorcycle, isSkipListMotorcycle = :isSkipListMotorcycle, isSkipTypeBrand = :isSkipTypeBrand, isSkipContent = :isSkipContent, idBrand = :idBrand, creationTime = :creationTime WHERE id = :id")
+    suspend fun updateSchedule(
+        id: Int,
+        typeLikeMotorcycle: String?,
+        motorcycleBrand: String?,
+        motorcycleList: String?,
+        contentList: String?,
+        isSkipIfYouHaveAMotorcycle: Boolean?,
+        isSkipListMotorcycle: Boolean?,
+        isSkipTypeBrand: Boolean?,
+        isSkipContent: Boolean?,
+        idBrand: Int?,
+        creationTime: String?
+    ): Int
 }

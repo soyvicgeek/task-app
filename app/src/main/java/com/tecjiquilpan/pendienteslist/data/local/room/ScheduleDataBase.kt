@@ -6,29 +6,28 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.tecjiquilpan.pendienteslist.data.local.room.dao.ScheduleDao
 import com.tecjiquilpan.pendienteslist.data.local.room.entity.ScheduleEntity
-import com.tecjiquilpan.pendienteslist.data.local.room.entity.ScheduleListEntity
 
-@Database(entities = [ScheduleListEntity::class], version = 1)
-abstract class ScheduleDatabase : RoomDatabase() {
-    abstract fun scheduleDao(): ScheduleDao
+@Database(entities = [ScheduleEntity::class], version = 1)
+abstract class ScheduleDataBase : RoomDatabase() {
+
+    abstract fun likeAndInterestsDao(): ScheduleDao
 
     companion object {
-        private const val DATABASE_NAME = "score_database"
-
         @Volatile
-        private var INSTANCE: ScheduleDatabase? = null
+        private var instance: ScheduleDataBase? = null
 
-        fun getDatabase(context: Context): ScheduleDatabase {
-            INSTANCE = INSTANCE ?: Room.databaseBuilder(
-                context.applicationContext,
-                ScheduleDatabase::class.java,
-                "schedule_table"
-            ).build()
-            return INSTANCE as ScheduleDatabase
+        fun getInstance(context: Context): ScheduleDataBase {
+            return instance ?: synchronized(this) {
+                instance ?: buildDatabase(context).also { instance = it }
+            }
         }
 
-        fun destroyInstance() {
-            INSTANCE = null
+        private fun buildDatabase(context: Context): ScheduleDataBase {
+            return Room.databaseBuilder(
+                context,
+                ScheduleDataBase::class.java,
+                "schedule_data_base"
+            ).build()
         }
     }
 }

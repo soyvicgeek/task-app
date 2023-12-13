@@ -1,30 +1,48 @@
 package com.tecjiquilpan.pendienteslist.data.repository
 
-import android.app.Application
-import android.os.AsyncTask
-import androidx.lifecycle.LiveData
-import com.tecjiquilpan.pendienteslist.data.local.room.ScheduleDatabase
+import com.tecjiquilpan.pendienteslist.data.local.room.ScheduleDataBase
 import com.tecjiquilpan.pendienteslist.data.local.room.dao.ScheduleDao
 import com.tecjiquilpan.pendienteslist.data.local.room.entity.ScheduleEntity
+import com.tecjiquilpan.pendienteslist.ui.App
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class ScheduleRepository(application: Application) {
-    private val scheduleDao: ScheduleDao = ScheduleDatabase.getDatabase(application).scheduleDao()
+class ScheduleRepository {
+    private val context = App.getContext()
+    private val localDataSource: ScheduleDao =
+        ScheduleDataBase.getInstance(context).likeAndInterestsDao()
 
-    fun insert(pokemon: ScheduleEntity) {
-        InsertAsyncTask(scheduleDao).execute(pokemon)
-    }
-
-    fun getSchedule(): LiveData<List<ScheduleEntity>> {
-        return scheduleDao.getSchedule()
-    }
-
-    private class InsertAsyncTask(private val scheduleDao: ScheduleDao) :
-        AsyncTask<ScheduleEntity, Void, Void>() {
-        override fun doInBackground(vararg pokemons: ScheduleEntity?): Void? {
-            for (pokemon in pokemons) {
-                if (pokemon != null) scheduleDao.addSchedule(pokemon)
-            }
-            return null
+    suspend fun addLikeAndInterests(road: ScheduleEntity) {
+        withContext(Dispatchers.IO) {
+            localDataSource.addSchedule(road)
         }
+    }
+
+    suspend fun getAllLikeAndInterests(): List<ScheduleEntity> {
+        return withContext(Dispatchers.IO) {
+            localDataSource.getAllSchedule()
+        }
+    }
+
+    suspend fun deleteLikeAndInterests() {
+        withContext(Dispatchers.IO) {
+            localDataSource.deleteSchedule()
+        }
+    }
+
+    suspend fun updateLikeAndInterests(update: ScheduleEntity) {
+        localDataSource.updateSchedule(
+            update.id,
+            update.typeLikeMotorcycle,
+            update.motorcycleBrand,
+            update.motorcycleList,
+            update.contentList,
+            update.isSkipIfYouHaveAMotorcycle,
+            update.isSkipListMotorcycle,
+            update.isSkipTypeBrand,
+            update.isSkipContent,
+            update.idBrand,
+            update.creationTime
+        )
     }
 }

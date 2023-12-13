@@ -39,7 +39,7 @@ class ScheduleAdapter(
     inner class MotorcycleViewHolder(val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ScheduleEntity, position: Int) {
-            binding.description.text = item.title
+            binding.description.text = item.motorcycleBrand
 
             binding.containerTask.setOnClickListener {
                 selectedItemPosition = position
