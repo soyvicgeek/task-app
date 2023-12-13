@@ -12,37 +12,31 @@ class ScheduleRepository {
     private val localDataSource: ScheduleDao =
         ScheduleDataBase.getInstance(context).likeAndInterestsDao()
 
-    suspend fun addLikeAndInterests(road: ScheduleEntity) {
+    suspend fun addSchedule(data: ScheduleEntity) {
         withContext(Dispatchers.IO) {
-            localDataSource.addSchedule(road)
+            localDataSource.addSchedule(data)
         }
     }
 
-    suspend fun getAllLikeAndInterests(): List<ScheduleEntity> {
+    suspend fun getAllSchedule(): List<ScheduleEntity> {
         return withContext(Dispatchers.IO) {
             localDataSource.getAllSchedule()
         }
     }
 
-    suspend fun deleteLikeAndInterests() {
+    suspend fun deleteSchedule(id: String) {
         withContext(Dispatchers.IO) {
-            localDataSource.deleteSchedule()
+            localDataSource.deleteSchedule(id)
         }
     }
 
-    suspend fun updateLikeAndInterests(update: ScheduleEntity) {
+    suspend fun updateSchedule(update: ScheduleEntity) {
         localDataSource.updateSchedule(
             update.id,
-            update.typeLikeMotorcycle,
-            update.motorcycleBrand,
-            update.motorcycleList,
-            update.contentList,
-            update.isSkipIfYouHaveAMotorcycle,
-            update.isSkipListMotorcycle,
-            update.isSkipTypeBrand,
-            update.isSkipContent,
-            update.idBrand,
-            update.creationTime
+            update.title,
+            update.description,
+            update.date,
+            update.hour
         )
     }
 }

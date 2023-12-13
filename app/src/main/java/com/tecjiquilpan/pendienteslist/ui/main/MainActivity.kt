@@ -1,27 +1,19 @@
 package com.tecjiquilpan.pendienteslist.ui.main
 
-import android.app.Dialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import com.tecjiquilpan.pendienteslist.R
 import com.tecjiquilpan.pendienteslist.data.local.room.entity.ScheduleEntity
 import com.tecjiquilpan.pendienteslist.databinding.ActivityMainBinding
 import com.tecjiquilpan.pendienteslist.ui.schedule.ScheduleActivity
 import com.tecjiquilpan.pendienteslist.ui.schedule.ScheduleAdapter
-import com.tecjiquilpan.pendienteslist.utils.setupDialog
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
-
-    private val addTaskDialog : Dialog by lazy {
-        Dialog(this).apply {
-            setupDialog(R.layout.add_task)
-        }
-    }
 
     private val adapter by lazy {
         ScheduleAdapter(
@@ -42,6 +34,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun init() = with(binding) {
         setupRecycleView()
+        observer()
+
+        viewModel.geScheduleList()
 
         addTask.setOnClickListener {
             goToScheduleActivity()
@@ -55,8 +50,24 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun updateDataLocal(item: ScheduleEntity, position: Int, list: MutableList<ScheduleEntity>) {
+    private fun observer() {
+        viewModel.getScheduleList.observe(this) {
+            if (it != null) {
+                adapter.updateList(it.toMutableList())
+                binding.taskRecycler.adapter = adapter
+            }
+        }
+    }
 
+    private fun updateDataLocal(item: ScheduleEntity, position: Int, list: MutableList<ScheduleEntity>) {
+        viewModel.deleteSchedule(item.id.toString())
+
+        viewModel.getScheduleList.observe(this) {
+            if (it != null) {
+                Toast.makeText(this, "Se elimino correctamente", Toast.LENGTH_LONG).show()
+                viewModel.geScheduleList()
+            }
+        }
     }
 
     private fun setupRecycleView() = with(binding){
@@ -68,8 +79,6 @@ class MainActivity : AppCompatActivity() {
                 false
             )
 
-        //adapter.updateList()
-        taskRecycler.adapter = adapter
         taskRecycler.isNestedScrollingEnabled = false
         taskRecycler.layoutManager = staggeredGridLayoutManager
     }

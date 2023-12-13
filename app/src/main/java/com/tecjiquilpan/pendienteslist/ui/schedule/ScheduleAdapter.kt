@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tecjiquilpan.pendienteslist.data.local.room.entity.ScheduleEntity
 import com.tecjiquilpan.pendienteslist.databinding.ItemTaskBinding
 
+
 class ScheduleAdapter(
     val onClicked: (ScheduleEntity, Int, MutableList<ScheduleEntity>) -> Unit
 ) : RecyclerView.Adapter<ScheduleAdapter.MotorcycleViewHolder>() {
@@ -39,12 +40,23 @@ class ScheduleAdapter(
     inner class MotorcycleViewHolder(val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ScheduleEntity, position: Int) {
-            binding.description.text = item.motorcycleBrand
+            binding.title.text = item.title
+            binding.description.text = item.description
+            val date = item.date.split(" ")
+            if (date.isNotEmpty()) {
+                binding.date.text = date[0]
+                binding.month.text = date[1]
+            }
 
-            binding.containerTask.setOnClickListener {
+            binding.day.text = "Jue"
+
+            binding.time.text = item.hour
+
+            binding.containerTask.setOnLongClickListener { v ->
                 selectedItemPosition = position
                 notifyDataSetChanged()
                 onClicked.invoke(item, position, list)
+                false
             }
         }
     }

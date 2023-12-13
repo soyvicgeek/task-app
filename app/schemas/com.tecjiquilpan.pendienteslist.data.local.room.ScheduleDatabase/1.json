@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "320e3b92d32ec448b633c479e6cbf287",
+    "identityHash": "f4fc01f45f54f34ce7f1d631234aeb2d",
     "entities": [
       {
         "tableName": "ScheduleEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `typeLikeMotorcycle` TEXT NOT NULL, `motorcycleBrand` TEXT NOT NULL, `motorcycleList` TEXT NOT NULL, `contentList` TEXT NOT NULL, `isSkipIfYouHaveAMotorcycle` INTEGER NOT NULL, `isSkipListMotorcycle` INTEGER NOT NULL, `isSkipTypeBrand` INTEGER NOT NULL, `isSkipContent` INTEGER NOT NULL, `idBrand` INTEGER NOT NULL, `creationTime` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `date` TEXT NOT NULL, `hour` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,62 +15,26 @@
             "notNull": true
           },
           {
-            "fieldPath": "typeLikeMotorcycle",
-            "columnName": "typeLikeMotorcycle",
+            "fieldPath": "title",
+            "columnName": "title",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "motorcycleBrand",
-            "columnName": "motorcycleBrand",
+            "fieldPath": "description",
+            "columnName": "description",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "motorcycleList",
-            "columnName": "motorcycleList",
+            "fieldPath": "date",
+            "columnName": "date",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "contentList",
-            "columnName": "contentList",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "isSkipIfYouHaveAMotorcycle",
-            "columnName": "isSkipIfYouHaveAMotorcycle",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "isSkipListMotorcycle",
-            "columnName": "isSkipListMotorcycle",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "isSkipTypeBrand",
-            "columnName": "isSkipTypeBrand",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "isSkipContent",
-            "columnName": "isSkipContent",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "idBrand",
-            "columnName": "idBrand",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "creationTime",
-            "columnName": "creationTime",
+            "fieldPath": "hour",
+            "columnName": "hour",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -88,7 +52,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '320e3b92d32ec448b633c479e6cbf287')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f4fc01f45f54f34ce7f1d631234aeb2d')"
     ]
   }
 }

@@ -13,21 +13,15 @@ interface ScheduleDao {
     @Query("SELECT * FROM ScheduleEntity")
     suspend fun getAllSchedule(): List<ScheduleEntity>
 
-    @Query("DELETE FROM ScheduleEntity")
-    suspend fun deleteSchedule()
+    @Query("DELETE FROM ScheduleEntity WHERE id=:id")
+    suspend fun deleteSchedule(id: String)
 
-    @Query("UPDATE ScheduleEntity SET typeLikeMotorcycle = :typeLikeMotorcycle, motorcycleBrand=:motorcycleBrand, motorcycleList=:motorcycleList, contentList = :contentList, isSkipIfYouHaveAMotorcycle = :isSkipIfYouHaveAMotorcycle, isSkipListMotorcycle = :isSkipListMotorcycle, isSkipTypeBrand = :isSkipTypeBrand, isSkipContent = :isSkipContent, idBrand = :idBrand, creationTime = :creationTime WHERE id = :id")
+    @Query("UPDATE ScheduleEntity SET title = :title, description=:description, date=:date, hour = :hour WHERE id = :id")
     suspend fun updateSchedule(
         id: Int,
-        typeLikeMotorcycle: String?,
-        motorcycleBrand: String?,
-        motorcycleList: String?,
-        contentList: String?,
-        isSkipIfYouHaveAMotorcycle: Boolean?,
-        isSkipListMotorcycle: Boolean?,
-        isSkipTypeBrand: Boolean?,
-        isSkipContent: Boolean?,
-        idBrand: Int?,
-        creationTime: String?
+        title: String?,
+        description: String?,
+        date: String?,
+        hour: String?
     ): Int
 }
