@@ -21,3 +21,4 @@ data class ScheduleEntity(
     @ColumnInfo(name = "schedule_id")
     var scheduleId: Int = 0
 }
+

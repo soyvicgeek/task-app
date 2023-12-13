@@ -6,13 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.tecjiquilpan.pendienteslist.R
 import com.tecjiquilpan.pendienteslist.data.local.room.entity.ScheduleEntity
 import com.tecjiquilpan.pendienteslist.databinding.ActivityMainBinding
 import com.tecjiquilpan.pendienteslist.ui.schedule.ScheduleActivity
 import com.tecjiquilpan.pendienteslist.ui.schedule.ScheduleAdapter
-import com.tecjiquilpan.pendienteslist.ui.schedule.ScheduleViewModel
 import com.tecjiquilpan.pendienteslist.utils.setupDialog
 
 class MainActivity : AppCompatActivity() {

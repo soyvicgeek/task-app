@@ -6,10 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.tecjiquilpan.pendienteslist.data.local.room.dao.ScheduleDao
 import com.tecjiquilpan.pendienteslist.data.local.room.entity.ScheduleEntity
+import com.tecjiquilpan.pendienteslist.data.local.room.entity.ScheduleListEntity
 
-@Database(entities = [ScheduleEntity::class], version = 1)
+@Database(entities = [ScheduleListEntity::class], version = 1)
 abstract class ScheduleDatabase : RoomDatabase() {
-    abstract fun pokemonDao(): ScheduleDao
+    abstract fun scheduleDao(): ScheduleDao
 
     companion object {
         private const val DATABASE_NAME = "score_database"

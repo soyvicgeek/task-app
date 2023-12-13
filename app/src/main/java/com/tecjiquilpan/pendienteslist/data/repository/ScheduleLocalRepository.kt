@@ -8,7 +8,7 @@ import com.tecjiquilpan.pendienteslist.data.local.room.dao.ScheduleDao
 import com.tecjiquilpan.pendienteslist.data.local.room.entity.ScheduleEntity
 
 class ScheduleRepository(application: Application) {
-    private val scheduleDao: ScheduleDao = ScheduleDatabase.getDatabase(application).pokemonDao()
+    private val scheduleDao: ScheduleDao = ScheduleDatabase.getDatabase(application).scheduleDao()
 
     fun insert(pokemon: ScheduleEntity) {
         InsertAsyncTask(scheduleDao).execute(pokemon)
