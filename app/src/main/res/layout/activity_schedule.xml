@@ -146,7 +146,16 @@
                     android:text="Añadir Pendiente"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
-
+                <Button
+                    android:id="@+id/cancelTask"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/btn_background"
+                    android:gravity="center"
+                    android:text="Cancelar"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>

@@ -2,6 +2,7 @@ package com.tecjiquilpan.pendienteslist.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,11 @@ class MainActivity : AppCompatActivity() {
             onClicked = { item, position, list ->
                 run {
                     updateDataLocal(item, position, list)
+                }
+            },
+            onUpdateClicked = { item, position, list ->
+                run {
+                    updateSchedule(item, position, list, false)
                 }
             }
         )
@@ -43,9 +49,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateSchedule(item: ScheduleEntity, position: Int, list: MutableList<ScheduleEntity>, b: Boolean) {
+        val intent =
+            Intent(applicationContext, ScheduleActivity::class.java)
+        intent.putExtra("title", item.title)
+        intent.putExtra("description", item.description)
+        intent.putExtra("time", item.date)
+        intent.putExtra("hour", item.hour)
+        intent.putExtra("isEdit", true)
+        intent.putExtra("id", item.id)
+        startActivity(intent)
+        finish()
+    }
+
+
     private fun goToScheduleActivity() {
         val intent =
             Intent(applicationContext, ScheduleActivity::class.java)
+        intent.putExtra("isEdit", false)
         startActivity(intent)
         finish()
     }
@@ -55,11 +76,20 @@ class MainActivity : AppCompatActivity() {
             if (it != null) {
                 adapter.updateList(it.toMutableList())
                 binding.taskRecycler.adapter = adapter
+                binding.noDataImage.visibility = View.GONE
+                binding.taskRecycler.visibility = View.VISIBLE
+            } else {
+                binding.noDataImage.visibility = View.VISIBLE
+                binding.taskRecycler.visibility = View.GONE
             }
         }
     }
 
-    private fun updateDataLocal(item: ScheduleEntity, position: Int, list: MutableList<ScheduleEntity>) {
+    private fun updateDataLocal(
+        item: ScheduleEntity,
+        position: Int,
+        list: MutableList<ScheduleEntity>
+    ) {
         viewModel.deleteSchedule(item.id.toString())
 
         viewModel.getScheduleList.observe(this) {
@@ -70,7 +100,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupRecycleView() = with(binding){
+    private fun setupRecycleView() = with(binding) {
         val staggeredGridLayoutManager =
             GridLayoutManager(
                 binding.root.context,
