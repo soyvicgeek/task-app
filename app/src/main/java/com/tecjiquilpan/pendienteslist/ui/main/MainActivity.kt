@@ -62,7 +62,6 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-
     private fun goToScheduleActivity() {
         val intent =
             Intent(applicationContext, ScheduleActivity::class.java)
@@ -95,9 +94,9 @@ class MainActivity : AppCompatActivity() {
         viewModel.getScheduleList.observe(this) {
             if (it != null) {
                 Toast.makeText(this, "Se elimino correctamente", Toast.LENGTH_LONG).show()
-                viewModel.geScheduleList()
             }
         }
+        viewModel.geScheduleList()
     }
 
     private fun setupRecycleView() = with(binding) {
